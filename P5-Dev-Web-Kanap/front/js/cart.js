@@ -161,6 +161,7 @@ if (kanapPannier) {
                         }
                         let shownPrice = document.querySelector("#totalPrice");
                         shownPrice.textContent = result;
+                        console.log(product.price)
 
                     }
 
@@ -168,18 +169,6 @@ if (kanapPannier) {
         }
         return objet;
     })
-    prixTotal();
-    function prixTotal() {
-                                              
-        let result = 0
-        for (const objet of kanapPannier) {
-            result += product.price * objet.quantity
-                            
-        }
-        let shownPrice = document.querySelector("#totalPrice");
-        shownPrice.textContent = result;
-
-    }
 } 
 /* mise a jour du panier */
 function majPannier(kanapPannier) {
