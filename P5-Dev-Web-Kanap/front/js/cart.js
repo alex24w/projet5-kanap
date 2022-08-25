@@ -3,22 +3,25 @@ let kanapPannier = JSON.parse(localStorage.getItem("produitDuPannier"));
 
 /* Ajout des produits */
 /* condition de vérification de panier */
-if (kanapPannier) {
+
+
     kanapPannier.map((objet) => {
-        const idArticle = objet._id;
-        const couleurArticle = objet.color;
-        const quantiteeArticle = objet.quantity;
-        ajoutItem();
+        let idArticle = objet._id;
+        let couleurArticle = objet.color;
+        let quantiteeArticle = objet.quantity;
+        ajoutItem()
+        
         function ajoutItem() {
 
             fetch(`http://localhost:3000/api/products/${idArticle}`)
                 .then(function (res) { return res.json() })
                 .then(function (donneeProduit) {
                     product = donneeProduit;
+                    prixTotal()
                     /* récupération de la section pour introduire les elements */
                     let section = document.querySelector("#cart__items");
 
-                    /* Article du produit */
+                    /* Création de l'Article */
                     let article = document.createElement("article");
                     section.appendChild(article);
                     article.classList.add("cart__item");
@@ -122,8 +125,6 @@ if (kanapPannier) {
                             }
                         })
 
-                        
-
                     })
                     /* suppression d'Item */
                     const bouttonSupp = document.querySelectorAll(".deleteItem");
@@ -135,7 +136,7 @@ if (kanapPannier) {
                             majPannier(kanapPannier);
                             getRoot.remove();
                             quantiteeTotalPannier();
-                            totalPrice();
+                            prixTotal()
                         });
                     });
 
@@ -151,25 +152,24 @@ if (kanapPannier) {
                     }
 
                     /* affichage prix total du panier */
-                    prixTotal();
-                    function prixTotal() {
-                                              
-                        let result = 0
-                        for (const objet of kanapPannier) {
-                            result += product.price * objet.quantity
-                            
-                        }
-                        let shownPrice = document.querySelector("#totalPrice");
-                        shownPrice.textContent = result;
-                        console.log(product.price)
-
-                    }
-
+                    
                 });
         }
         return objet;
     })
-} 
+
+function prixTotal() {
+                
+    let result = 0
+    for (const objet of kanapPannier) {
+    result += product.price * objet.quantity
+                            
+    }
+    let shownPrice = document.querySelector("#totalPrice");
+    shownPrice.textContent = result;
+    console.log(product.price)
+    }   
+
 /* mise a jour du panier */
 function majPannier(kanapPannier) {
     if (kanapPannier.length === 0) {
@@ -266,14 +266,15 @@ let formulaireDeCommande = () => {
                     window.location.href = "confirmation.html?orderId=" + data.orderId;
                 })
                 .catch(err => console.log(err))
-
+            
+            
         }
         else {
             document.querySelector("#order").value = "Veuillez remplir tout les champs"
         };
     });
-};
 
+};
 
 window.addEventListener('load', () => {
     formulaireDeCommande();

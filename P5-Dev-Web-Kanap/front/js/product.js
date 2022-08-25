@@ -52,15 +52,17 @@ function ajoutPannier() {
         let color = choixCouleur.value;
 
         /* affiche un message d'erreur si il manque un champs non remplis */
-        if (color == null || color == ""  || quantitee == null || quantitee == 0)
+        if (color == null || color == ""  || quantitee == null || quantitee == 0){
             window.alert("merci de choisir une couleur et une quantité")
+        }
         
         /* permet de limité la quantité d'un article */
-        if (choixQuantitee.value >= 101) 
+        if (choixQuantitee.value >= 101){
             choixQuantitee.value = 0
-
-        if (choixQuantitee.value < 0) 
+        }
+        if (choixQuantitee.value < 0){
             choixQuantitee.value = 0
+        }
 
         /* condition : vérifications des champs bien rentrés */
         if (choixQuantitee.value > 0 && choixQuantitee.value < 101 && choixCouleur.value != 0) {
